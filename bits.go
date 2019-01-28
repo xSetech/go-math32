@@ -54,9 +54,9 @@ func IsInf(f float32, sign int) bool {
 // normalize returns a normal number y and exponent exp
 // satisfying x == y × 2**exp. It assumes x is finite and non-zero.
 func normalize(x float32) (y float32, exp int) {
-    const SmallestNormal = 1.1754944e-38 // 2**−126
-    if Abs(x) < SmallestNormal {
-        return x * (1 << 23), -23
-    }
-    return x, 0
+	const SmallestNormal = 1.1754944e-38 // 2**−126
+	if Abs(x) < SmallestNormal {
+		return x * (1 << 23), -23
+	}
+	return x, 0
 }
