@@ -11,7 +11,7 @@ package go-math32
 //	Exp(NaN) = NaN
 // Very large values overflow to 0 or +Inf.
 // Very small values underflow to 1.
-func Exp(x float64) float64
+func Exp(x float32) float32
 
 // The original C code, the long comment, and the constants
 // below are from FreeBSD's /usr/src/lib/msun/src/e_exp.c
@@ -89,7 +89,7 @@ func Exp(x float64) float64
 // compiler will convert from decimal to binary accurately enough
 // to produce the hexadecimal values shown.
 
-func exp(x float64) float64 {
+func exp(x float32) float32 {
 	const (
 		Ln2Hi = 6.93147180369123816490e-01
 		Ln2Lo = 1.90821492927058770002e-10
@@ -122,8 +122,8 @@ func exp(x float64) float64 {
 	case x > 0:
 		k = int(Log2e*x + 0.5)
 	}
-	hi := x - float64(k)*Ln2Hi
-	lo := float64(k) * Ln2Lo
+	hi := x - float32(k)*Ln2Hi
+	lo := float32(k) * Ln2Lo
 
 	// compute
 	return expmulti(hi, lo, k)
@@ -132,9 +132,9 @@ func exp(x float64) float64 {
 // Exp2 returns 2**x, the base-2 exponential of x.
 //
 // Special cases are the same as Exp.
-func Exp2(x float64) float64
+func Exp2(x float32) float32
 
-func exp2(x float64) float64 {
+func exp2(x float32) float32 {
 	const (
 		Ln2Hi = 6.93147180369123816490e-01
 		Ln2Lo = 1.90821492927058770002e-10
@@ -164,7 +164,7 @@ func exp2(x float64) float64 {
 	case x < 0:
 		k = int(x - 0.5)
 	}
-	t := x - float64(k)
+	t := x - float32(k)
 	hi := t * Ln2Hi
 	lo := -t * Ln2Lo
 
@@ -173,7 +173,7 @@ func exp2(x float64) float64 {
 }
 
 // exp1 returns e**r × 2**k where r = hi - lo and |r| ≤ ln(2)/2.
-func expmulti(hi, lo float64, k int) float64 {
+func expmulti(hi, lo float32, k int) float32 {
 	const (
 		P1 = 1.66666666666666657415e-01  /* 0x3FC55555; 0x55555555 */
 		P2 = -2.77777777770155933842e-03 /* 0xBF66C16C; 0x16BEBD93 */

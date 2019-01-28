@@ -92,15 +92,15 @@ package go-math32
 //	Log1p(-1) = -Inf
 //	Log1p(x < -1) = NaN
 //	Log1p(NaN) = NaN
-func Log1p(x float64) float64
+func Log1p(x float32) float32
 
-func log1p(x float64) float64 {
+func log1p(x float32) float32 {
 	const (
 		Sqrt2M1     = 4.142135623730950488017e-01  // Sqrt(2)-1 = 0x3fda827999fcef34
 		Sqrt2HalfM1 = -2.928932188134524755992e-01 // Sqrt(2)/2-1 = 0xbfd2bec333018866
-		Small       = 1.0 / (1 << 29)              // 2**-29 = 0x3e20000000000000
-		Tiny        = 1.0 / (1 << 54)              // 2**-54
-		Two53       = 1 << 53                      // 2**53
+		Small       = 1.0 / (1 << 13)              // 2**-13
+		Tiny        = 1.0 / (1 << 25)              // 2**-25
+		Two24       = 1 << 24                      // 2**53
 		Ln2Hi       = 6.93147180369123816490e-01   // 3fe62e42fee00000
 		Ln2Lo       = 1.90821492927058770002e-10   // 3dea39ef35793c76
 		Lp1         = 6.666666666666735130e-01     // 3FE5555555555593
@@ -127,12 +127,12 @@ func log1p(x float64) float64 {
 		absx = -absx
 	}
 
-	var f float64
-	var iu uint64
+	var f float32
+	var iu uint32
 	k := 1
 	if absx < Sqrt2M1 { //  |x| < Sqrt(2)-1
-		if absx < Small { // |x| < 2**-29
-			if absx < Tiny { // |x| < 2**-54
+		if absx < Small { // |x| < 2**-14
+			if absx < Tiny { // |x| < 2**-25
 				return x
 			}
 			return x - x*x*0.5
@@ -144,13 +144,13 @@ func log1p(x float64) float64 {
 			iu = 1
 		}
 	}
-	var c float64
+	var c float32
 	if k != 0 {
-		var u float64
-		if absx < Two53 { // 1<<53
+		var u float32
+		if absx < Two24 { // 1<<53
 			u = 1.0 + x
-			iu = Float64bits(u)
-			k = int((iu >> 52) - 1023)
+			iu = Float32bits(u)
+			k = int((iu >> 23) - 127)
 			if k > 0 {
 				c = 1.0 - (u - x)
 			} else {
@@ -159,35 +159,35 @@ func log1p(x float64) float64 {
 			}
 		} else {
 			u = x
-			iu = Float64bits(u)
-			k = int((iu >> 52) - 1023)
+			iu = Float32bits(u)
+			k = int((iu >> 23) - 127)
 			c = 0
 		}
-		iu &= 0x000fffffffffffff
-		if iu < 0x0006a09e667f3bcd { // mantissa of Sqrt(2)
-			u = Float64frombits(iu | 0x3ff0000000000000) // normalize u
+		iu &= 0x007FFFFF // select mantissa
+		if iu < 0x003504F3 { // mantissa of Sqrt(2)
+			u = Float32frombits(iu | 0x3ff00000) // normalize u
 		} else {
 			k++
-			u = Float64frombits(iu | 0x3fe0000000000000) // normalize u/2
-			iu = (0x0010000000000000 - iu) >> 2
+			u = Float32frombits(iu | 0x3fe00000) // normalize u/2
+			iu = (0x00100000 - iu) >> 2
 		}
 		f = u - 1.0 // Sqrt(2)/2 < u < Sqrt(2)
 	}
 	hfsq := 0.5 * f * f
-	var s, R, z float64
+	var s, R, z float32
 	if iu == 0 { // |f| < 2**-20
 		if f == 0 {
 			if k == 0 {
 				return 0
 			}
-			c += float64(k) * Ln2Lo
-			return float64(k)*Ln2Hi + c
+			c += float32(k) * Ln2Lo
+			return float32(k)*Ln2Hi + c
 		}
 		R = hfsq * (1.0 - 0.66666666666666666*f) // avoid division
 		if k == 0 {
 			return f - R
 		}
-		return float64(k)*Ln2Hi - ((R - (float64(k)*Ln2Lo + c)) - f)
+		return float32(k)*Ln2Hi - ((R - (float32(k)*Ln2Lo + c)) - f)
 	}
 	s = f / (2.0 + f)
 	z = s * s
@@ -195,5 +195,5 @@ func log1p(x float64) float64 {
 	if k == 0 {
 		return f - (hfsq - s*(hfsq+R))
 	}
-	return float64(k)*Ln2Hi - ((hfsq - (s*(hfsq+R) + (float64(k)*Ln2Lo + c))) - f)
+	return float32(k)*Ln2Hi - ((hfsq - (s*(hfsq+R) + (float32(k)*Ln2Lo + c))) - f)
 }

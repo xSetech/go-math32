@@ -13,9 +13,9 @@ package go-math32
 //	Frexp(±0) = ±0, 0
 //	Frexp(±Inf) = ±Inf, 0
 //	Frexp(NaN) = NaN, 0
-func Frexp(f float64) (frac float64, exp int)
+func Frexp(f float32) (frac float32, exp int)
 
-func frexp(f float64) (frac float64, exp int) {
+func frexp(f float32) (frac float32, exp int) {
 	// special cases
 	switch {
 	case f == 0:
@@ -24,10 +24,10 @@ func frexp(f float64) (frac float64, exp int) {
 		return f, 0
 	}
 	f, exp = normalize(f)
-	x := Float64bits(f)
+	x := Float32bits(f)
 	exp += int((x>>shift)&mask) - bias + 1
-	x &^= mask << shift
+	x &^= 0x7F800000
 	x |= (-1 + bias) << shift
-	frac = Float64frombits(x)
+	frac = Float32frombits(x)
 	return
 }

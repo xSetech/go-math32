@@ -10,9 +10,9 @@ package go-math32
 // Special cases are:
 //	Modf(±Inf) = ±Inf, NaN
 //	Modf(NaN) = NaN, NaN
-func Modf(f float64) (int float64, frac float64)
+func Modf(f float32) (int float32, frac float32)
 
-func modf(f float64) (int float64, frac float64) {
+func modf(f float32) (int float32, frac float32) {
 	if f < 1 {
 		switch {
 		case f < 0:
@@ -24,14 +24,14 @@ func modf(f float64) (int float64, frac float64) {
 		return 0, f
 	}
 
-	x := Float64bits(f)
+	x := Float32bits(f)
 	e := uint(x>>shift)&mask - bias
 
 	// Keep the top 12+e bits, the integer part; clear the rest.
-	if e < 64-12 {
-		x &^= 1<<(64-12-e) - 1
+	if e < 32-9 {
+		x &^= 1<<(32-9-e) - 1
 	}
-	int = Float64frombits(x)
+	int = Float32frombits(x)
 	frac = f - int
 	return
 }

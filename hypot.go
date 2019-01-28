@@ -16,9 +16,9 @@ package go-math32
 //	Hypot(p, ±Inf) = +Inf
 //	Hypot(NaN, q) = NaN
 //	Hypot(p, NaN) = NaN
-func Hypot(p, q float64) float64
+func Hypot(p, q float32) float32
 
-func hypot(p, q float64) float64 {
+func hypot(p, q float32) float32 {
 	// special cases
 	switch {
 	case IsInf(p, 0) || IsInf(q, 0):

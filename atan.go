@@ -52,7 +52,7 @@ package go-math32
 //   moshier@na-net.ornl.gov
 
 // xatan evaluates a series valid in the range [0, 0.66].
-func xatan(x float64) float64 {
+func xatan(x float32) float32 {
 	const (
 		P0 = -8.750608600031904122785e-01
 		P1 = -1.615753718733365076637e+01
@@ -73,7 +73,7 @@ func xatan(x float64) float64 {
 
 // satan reduces its argument (known to be positive)
 // to the range [0, 0.66] and calls xatan.
-func satan(x float64) float64 {
+func satan(x float32) float32 {
 	const (
 		Morebits = 6.123233995736765886130e-17 // pi/2 = PIO2 + Morebits
 		Tan3pio8 = 2.41421356237309504880      // tan(3*pi/8)
@@ -92,9 +92,9 @@ func satan(x float64) float64 {
 // Special cases are:
 //      Atan(±0) = ±0
 //      Atan(±Inf) = ±Pi/2
-func Atan(x float64) float64
+func Atan(x float32) float32
 
-func atan(x float64) float64 {
+func atan(x float32) float32 {
 	if x == 0 {
 		return x
 	}

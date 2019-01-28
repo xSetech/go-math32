@@ -10,7 +10,7 @@ package go-math32
 //	Dim(+Inf, +Inf) = NaN
 //	Dim(-Inf, -Inf) = NaN
 //	Dim(x, NaN) = Dim(NaN, x) = NaN
-func Dim(x, y float64) float64 {
+func Dim(x, y float32) float32 {
 	// The special cases result in NaN after the subtraction:
 	//      +Inf - +Inf = NaN
 	//      -Inf - -Inf = NaN
@@ -32,9 +32,9 @@ func Dim(x, y float64) float64 {
 //	Max(x, NaN) = Max(NaN, x) = NaN
 //	Max(+0, ±0) = Max(±0, +0) = +0
 //	Max(-0, -0) = -0
-func Max(x, y float64) float64
+func Max(x, y float32) float32
 
-func max(x, y float64) float64 {
+func max(x, y float32) float32 {
 	// special cases
 	switch {
 	case IsInf(x, 1) || IsInf(y, 1):
@@ -59,9 +59,9 @@ func max(x, y float64) float64 {
 //	Min(x, -Inf) = Min(-Inf, x) = -Inf
 //	Min(x, NaN) = Min(NaN, x) = NaN
 //	Min(-0, ±0) = Min(±0, -0) = -0
-func Min(x, y float64) float64
+func Min(x, y float32) float32
 
-func min(x, y float64) float64 {
+func min(x, y float32) float32 {
 	// special cases
 	switch {
 	case IsInf(x, -1) || IsInf(y, -1):

@@ -10,7 +10,7 @@ package go-math32
 //	Logb(±Inf) = +Inf
 //	Logb(0) = -Inf
 //	Logb(NaN) = NaN
-func Logb(x float64) float64 {
+func Logb(x float32) float32 {
 	// special cases
 	switch {
 	case x == 0:
@@ -20,7 +20,7 @@ func Logb(x float64) float64 {
 	case IsNaN(x):
 		return x
 	}
-	return float64(ilogb(x))
+	return float32(ilogb(x))
 }
 
 // Ilogb returns the binary exponent of x as an integer.
@@ -29,7 +29,7 @@ func Logb(x float64) float64 {
 //	Ilogb(±Inf) = MaxInt32
 //	Ilogb(0) = MinInt32
 //	Ilogb(NaN) = MaxInt32
-func Ilogb(x float64) int {
+func Ilogb(x float32) int {
 	// special cases
 	switch {
 	case x == 0:
@@ -44,7 +44,7 @@ func Ilogb(x float64) int {
 
 // logb returns the binary exponent of x. It assumes x is finite and
 // non-zero.
-func ilogb(x float64) int {
+func ilogb(x float32) int {
 	x, exp := normalize(x)
-	return int((Float64bits(x)>>shift)&mask) - bias + exp
+	return int((Float32bits(x)>>shift)&mask) - bias + exp
 }

@@ -73,7 +73,7 @@ const (
 //	Erfinv(-1) = -Inf
 //	Erfinv(x) = NaN if x < -1 or x > 1
 //	Erfinv(NaN) = NaN
-func Erfinv(x float64) float64 {
+func Erfinv(x float32) float32 {
 	// special cases
 	if IsNaN(x) || x <= -1 || x >= 1 {
 		if x == -1 || x == 1 {
@@ -88,14 +88,14 @@ func Erfinv(x float64) float64 {
 		sign = true
 	}
 
-	var ans float64
+	var ans float32
 	if x <= 0.85 { // |x| <= 0.85
 		r := 0.180625 - 0.25*x*x
 		z1 := ((((((a7*r+a6)*r+a5)*r+a4)*r+a3)*r+a2)*r+a1)*r + a0
 		z2 := ((((((b7*r+b6)*r+b5)*r+b4)*r+b3)*r+b2)*r+b1)*r + b0
 		ans = (x * z1) / z2
 	} else {
-		var z1, z2 float64
+		var z1, z2 float32
 		r := Sqrt(Ln2 - Log(1.0-x))
 		if r <= 5.0 {
 			r -= 1.6
@@ -122,6 +122,6 @@ func Erfinv(x float64) float64 {
 //	Erfcinv(2) = -Inf
 //	Erfcinv(x) = NaN if x < 0 or x > 2
 //	Erfcinv(NaN) = NaN
-func Erfcinv(x float64) float64 {
+func Erfcinv(x float32) float32 {
 	return Erfinv(1 - x)
 }

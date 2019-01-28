@@ -9,6 +9,6 @@ package go-math32
 // Special cases are:
 //	Abs(±Inf) = +Inf
 //	Abs(NaN) = NaN
-func Abs(x float64) float64 {
-	return Float64frombits(Float64bits(x) &^ (1 << 63))
+func Abs(x float32) float32 {
+	return Float32frombits(Float32bits(x) &^ (1 << 31))
 }

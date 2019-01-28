@@ -11,9 +11,9 @@ package go-math32
 //	Ldexp(±0, exp) = ±0
 //	Ldexp(±Inf, exp) = ±Inf
 //	Ldexp(NaN, exp) = NaN
-func Ldexp(frac float64, exp int) float64
+func Ldexp(frac float32, exp int) float32
 
-func ldexp(frac float64, exp int) float64 {
+func ldexp(frac float32, exp int) float32 {
 	// special cases
 	switch {
 	case frac == 0:
@@ -23,23 +23,23 @@ func ldexp(frac float64, exp int) float64 {
 	}
 	frac, e := normalize(frac)
 	exp += e
-	x := Float64bits(frac)
+	x := Float32bits(frac)
 	exp += int(x>>shift)&mask - bias
-	if exp < -1075 {
+	if exp < -150 { //
 		return Copysign(0, frac) // underflow
 	}
-	if exp > 1023 { // overflow
+	if exp > 127 { // overflow
 		if frac < 0 {
 			return Inf(-1)
 		}
 		return Inf(1)
 	}
-	var m float64 = 1
-	if exp < -1022 { // denormal
-		exp += 53
-		m = 1.0 / (1 << 53) // 2**-53
+	var m float32 = 1
+	if exp < -126 { // denormal
+		exp += 24
+		m = 1.0 / (1 << 24) // 2**-24
 	}
-	x &^= mask << shift
-	x |= uint64(exp+bias) << shift
-	return m * Float64frombits(x)
+	x &^= 0x7F800000 // mask << shift
+	x |= uint32(exp+bias) << shift
+	return m * Float32frombits(x)
 }

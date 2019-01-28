@@ -34,12 +34,12 @@ package go-math32
 //	Remainder(x, 0) = NaN
 //	Remainder(x, ±Inf) = x
 //	Remainder(x, NaN) = NaN
-func Remainder(x, y float64) float64
+func Remainder(x, y float32) float32
 
-func remainder(x, y float64) float64 {
+func remainder(x, y float32) float32 {
 	const (
 		Tiny    = 4.45014771701440276618e-308 // 0x0020000000000000
-		HalfMax = MaxFloat64 / 2
+		HalfMax = MaxFloat32 / 2
 	)
 	// special cases
 	switch {

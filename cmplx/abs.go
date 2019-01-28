@@ -9,4 +9,4 @@ package cmplx
 import "go-math32"
 
 // Abs returns the absolute value (also called the modulus) of x.
-func Abs(x complex128) float64 { return math.Hypot(real(x), imag(x)) }
+func Abs(x complex128) float32 { return math.Hypot(real(x), imag(x)) }
