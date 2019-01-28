@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 func log10TrampolineSetup(x float64) float64
 func log10Asm(x float64) float64

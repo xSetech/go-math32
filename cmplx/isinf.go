@@ -4,7 +4,7 @@
 
 package cmplx
 
-import "math"
+import "go-math32"
 
 // IsInf returns true if either real(x) or imag(x) is an infinity.
 func IsInf(x complex128) bool {

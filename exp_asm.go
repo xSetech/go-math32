@@ -4,7 +4,7 @@
 
 // +build amd64 amd64p32
 
-package math
+package go-math32
 
 import "internal/cpu"
 

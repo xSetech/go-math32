@@ -9,7 +9,7 @@
 
 package rand
 
-import "math"
+import "go-math32"
 
 // A Zipf generates Zipf distributed variates.
 type Zipf struct {

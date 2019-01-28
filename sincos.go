@@ -4,7 +4,7 @@
 
 // +build !386
 
-package math
+package go-math32
 
 // Coefficients _sin[] and _cos[] are found in pkg/math/sin.go.
 
