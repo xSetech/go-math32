@@ -1,6 +1,7 @@
 # go-math32
 
-The [standard golang math package](https://github.com/golang/go/tree/release-branch.go1.11/src/math) converted to only use [IEEE 754 single-precision](https://en.wikipedia.org/wiki/IEEE_754#Basic_and_interchange_formats) (32-bits).
+The [standard golang math package](https://github.com/golang/go/tree/https://github.com/golang/go/tree/go1.11.4/src/math) converted to only use [IEEE 754 single-precision](https://en.wikipedia.org/wiki/IEEE_754#Basic_and_interchange_formats) (32-bits).
+
 
 ## Rationale and excluded functionality
 
