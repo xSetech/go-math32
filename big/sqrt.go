@@ -4,7 +4,7 @@
 
 package big
 
-import "math"
+import "go-math32"
 
 var (
 	half  = NewFloat(0.5)

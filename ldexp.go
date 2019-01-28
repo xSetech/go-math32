@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 // Ldexp is the inverse of Frexp.
 // It returns frac × 2**exp.

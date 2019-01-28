@@ -4,7 +4,7 @@
 
 package cmplx
 
-import "math"
+import "go-math32"
 
 // Rect returns the complex number x with polar coordinates r, θ.
 func Rect(r, θ float64) complex128 {

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 // Frexp breaks f into a normalized fraction
 // and an integral power of two.

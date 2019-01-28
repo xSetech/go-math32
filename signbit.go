@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 // Signbit returns true if x is negative or negative zero.
 func Signbit(x float64) bool {

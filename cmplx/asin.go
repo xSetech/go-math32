@@ -4,7 +4,7 @@
 
 package cmplx
 
-import "math"
+import "go-math32"
 
 // The original C code, the long comment, and the constants
 // below are from http://netlib.sandia.gov/cephes/c9x-complex/clog.c.

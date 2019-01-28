@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 // pow10tab stores the pre-computed values 10**i for i < 32.
 var pow10tab = [...]float64{

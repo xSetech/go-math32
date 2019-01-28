@@ -4,7 +4,7 @@
 
 package cmplx
 
-import "math"
+import "go-math32"
 
 // Phase returns the phase (also called the argument) of x.
 // The returned value is in the range [-Pi, Pi].

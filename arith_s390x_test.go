@@ -4,7 +4,7 @@
 
 // Tests whether the non vector routines are working, even when the tests are run on a
 // vector-capable machine.
-package math_test
+package go-math32_test
 
 import (
 	. "math"

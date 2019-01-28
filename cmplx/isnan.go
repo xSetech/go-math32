@@ -4,7 +4,7 @@
 
 package cmplx
 
-import "math"
+import "go-math32"
 
 // IsNaN returns true if either real(x) or imag(x) is NaN
 // and neither is an infinity.

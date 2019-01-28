@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package math
+package go-math32
 
 // The go code is a modified version of the original C code from
 // http://www.netlib.org/fdlibm/s_cbrt.c and came with this notice.
