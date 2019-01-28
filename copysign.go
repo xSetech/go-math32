@@ -6,7 +6,7 @@ package go-math32
 
 // Copysign returns a value with the magnitude
 // of x and the sign of y.
-func Copysign(x, y float64) float64 {
-	const sign = 1 << 63
-	return Float64frombits(Float64bits(x)&^sign | Float64bits(y)&sign)
+func Copysign(x, y float32) float32 {
+	const sign = 1 << 31
+	return Float32frombits(Float32bits(x)&^sign | Float32bits(y)&sign)
 }

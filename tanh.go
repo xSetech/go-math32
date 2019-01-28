@@ -54,12 +54,12 @@ package go-math32
 //   moshier@na-net.ornl.gov
 //
 
-var tanhP = [...]float64{
+var tanhP = [...]float32{
 	-9.64399179425052238628E-1,
 	-9.92877231001918586564E1,
 	-1.61468768441708447952E3,
 }
-var tanhQ = [...]float64{
+var tanhQ = [...]float32{
 	1.12811678491632931402E2,
 	2.23548839060100448583E3,
 	4.84406305325125486048E3,
@@ -71,9 +71,9 @@ var tanhQ = [...]float64{
 //	Tanh(±0) = ±0
 //	Tanh(±Inf) = ±1
 //	Tanh(NaN) = NaN
-func Tanh(x float64) float64
+func Tanh(x float32) float32
 
-func tanh(x float64) float64 {
+func tanh(x float32) float32 {
 	const MAXLOG = 8.8029691931113054295988e+01 // log(2**127)
 	z := Abs(x)
 	switch {

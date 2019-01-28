@@ -5,36 +5,36 @@
 package go-math32
 
 const (
-	uvnan    = 0x7FF8000000000001
-	uvinf    = 0x7FF0000000000000
-	uvneginf = 0xFFF0000000000000
-	uvone    = 0x3FF0000000000000
-	mask     = 0x7FF
-	shift    = 64 - 11 - 1
-	bias     = 1023
-	signMask = 1 << 63
+	uvnan    = 0x7F800001
+	uvinf    = 0x7F800000
+	uvneginf = 0xFF800000
+	uvone    = 0x3F800000
+	mask     = 0x7FF // Specifically not 0x7F8 due to shifting
+	shift    = 32 - 8 - 1
+	bias     = 127
+	signMask = 1 << 31
 	fracMask = 1<<shift - 1
 )
 
 // Inf returns positive infinity if sign >= 0, negative infinity if sign < 0.
-func Inf(sign int) float64 {
-	var v uint64
+func Inf(sign int) float32 {
+	var v uint32
 	if sign >= 0 {
 		v = uvinf
 	} else {
 		v = uvneginf
 	}
-	return Float64frombits(v)
+	return Float32frombits(v)
 }
 
 // NaN returns an IEEE 754 ``not-a-number'' value.
-func NaN() float64 { return Float64frombits(uvnan) }
+func NaN() float32 { return Float32frombits(uvnan) }
 
 // IsNaN reports whether f is an IEEE 754 ``not-a-number'' value.
-func IsNaN(f float64) (is bool) {
+func IsNaN(f float32) (is bool) {
 	// IEEE 754 says that only NaNs satisfy f != f.
 	// To avoid the floating-point hardware, could use:
-	//	x := Float64bits(f);
+	//	x := Float32bits(f);
 	//	return uint32(x>>shift)&mask == mask && x != uvinf && x != uvneginf
 	return f != f
 }
@@ -43,20 +43,20 @@ func IsNaN(f float64) (is bool) {
 // If sign > 0, IsInf reports whether f is positive infinity.
 // If sign < 0, IsInf reports whether f is negative infinity.
 // If sign == 0, IsInf reports whether f is either infinity.
-func IsInf(f float64, sign int) bool {
+func IsInf(f float32, sign int) bool {
 	// Test for infinity by comparing against maximum float.
 	// To avoid the floating-point hardware, could use:
-	//	x := Float64bits(f);
+	//	x := Float32bits(f);
 	//	return sign >= 0 && x == uvinf || sign <= 0 && x == uvneginf;
-	return sign >= 0 && f > MaxFloat64 || sign <= 0 && f < -MaxFloat64
+	return sign >= 0 && f > MaxFloat32 || sign <= 0 && f < -MaxFloat32
 }
 
 // normalize returns a normal number y and exponent exp
 // satisfying x == y × 2**exp. It assumes x is finite and non-zero.
-func normalize(x float64) (y float64, exp int) {
-	const SmallestNormal = 2.2250738585072014e-308 // 2**-1022
-	if Abs(x) < SmallestNormal {
-		return x * (1 << 52), -52
-	}
-	return x, 0
+func normalize(x float32) (y float32, exp int) {
+    const SmallestNormal = 1.1754944e-38 // 2**−126
+    if Abs(x) < SmallestNormal {
+        return x * (1 << 23), -23
+    }
+    return x, 0
 }

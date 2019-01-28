@@ -10,9 +10,9 @@ package go-math32
 //	Floor(±0) = ±0
 //	Floor(±Inf) = ±Inf
 //	Floor(NaN) = NaN
-func Floor(x float64) float64
+func Floor(x float32) float32
 
-func floor(x float64) float64 {
+func floor(x float32) float32 {
 	if x == 0 || IsNaN(x) || IsInf(x, 0) {
 		return x
 	}
@@ -33,9 +33,9 @@ func floor(x float64) float64 {
 //	Ceil(±0) = ±0
 //	Ceil(±Inf) = ±Inf
 //	Ceil(NaN) = NaN
-func Ceil(x float64) float64
+func Ceil(x float32) float32
 
-func ceil(x float64) float64 {
+func ceil(x float32) float32 {
 	return -Floor(-x)
 }
 
@@ -45,9 +45,9 @@ func ceil(x float64) float64 {
 //	Trunc(±0) = ±0
 //	Trunc(±Inf) = ±Inf
 //	Trunc(NaN) = NaN
-func Trunc(x float64) float64
+func Trunc(x float32) float32
 
-func trunc(x float64) float64 {
+func trunc(x float32) float32 {
 	if x == 0 || IsNaN(x) || IsInf(x, 0) {
 		return x
 	}
@@ -61,17 +61,17 @@ func trunc(x float64) float64 {
 //	Round(±0) = ±0
 //	Round(±Inf) = ±Inf
 //	Round(NaN) = NaN
-func Round(x float64) float64 {
+func Round(x float32) float32 {
 	// Round is a faster implementation of:
 	//
-	// func Round(x float64) float64 {
+	// func Round(x float32) float32 {
 	//   t := Trunc(x)
 	//   if Abs(x-t) >= 0.5 {
 	//     return t + Copysign(1, x)
 	//   }
 	//   return t
 	// }
-	bits := Float64bits(x)
+	bits := Float32bits(x)
 	e := uint(bits>>shift) & mask
 	if e < bias {
 		// Round abs(x) < 1 including denormals.
@@ -89,7 +89,7 @@ func Round(x float64) float64 {
 		bits += half >> e
 		bits &^= fracMask >> e
 	}
-	return Float64frombits(bits)
+	return Float32frombits(bits)
 }
 
 // RoundToEven returns the nearest integer, rounding ties to even.
@@ -98,10 +98,10 @@ func Round(x float64) float64 {
 //	RoundToEven(±0) = ±0
 //	RoundToEven(±Inf) = ±Inf
 //	RoundToEven(NaN) = NaN
-func RoundToEven(x float64) float64 {
+func RoundToEven(x float32) float32 {
 	// RoundToEven is a faster implementation of:
 	//
-	// func RoundToEven(x float64) float64 {
+	// func RoundToEven(x float32) float32 {
 	//   t := math.Trunc(x)
 	//   odd := math.Remainder(t, 2) != 0
 	//   if d := math.Abs(x - t); d > 0.5 || (d == 0.5 && odd) {
@@ -109,7 +109,7 @@ func RoundToEven(x float64) float64 {
 	//   }
 	//   return t
 	// }
-	bits := Float64bits(x)
+	bits := Float32bits(x)
 	e := uint(bits>>shift) & mask
 	if e >= bias {
 		// Round abs(x) >= 1.
@@ -127,5 +127,5 @@ func RoundToEven(x float64) float64 {
 		// Round abs(x) <= 0.5 including denormals.
 		bits &= signMask // +-0
 	}
-	return Float64frombits(bits)
+	return Float32frombits(bits)
 }

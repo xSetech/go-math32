@@ -16,9 +16,9 @@ package go-math32
 // Special cases are:
 //	Asin(±0) = ±0
 //	Asin(x) = NaN if x < -1 or x > 1
-func Asin(x float64) float64
+func Asin(x float32) float32
 
-func asin(x float64) float64 {
+func asin(x float32) float32 {
 	if x == 0 {
 		return x // special case
 	}
@@ -48,8 +48,8 @@ func asin(x float64) float64 {
 //
 // Special case is:
 //	Acos(x) = NaN if x < -1 or x > 1
-func Acos(x float64) float64
+func Acos(x float32) float32
 
-func acos(x float64) float64 {
+func acos(x float32) float32 {
 	return Pi/2 - Asin(x)
 }

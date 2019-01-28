@@ -18,9 +18,9 @@ package go-math32
 //	Mod(x, 0) = NaN
 //	Mod(x, ±Inf) = x
 //	Mod(x, NaN) = NaN
-func Mod(x, y float64) float64
+func Mod(x, y float32) float32
 
-func mod(x, y float64) float64 {
+func mod(x, y float32) float32 {
 	if y == 0 || IsInf(x, 0) || IsNaN(x) || IsNaN(y) {
 		return NaN()
 	}

@@ -4,9 +4,9 @@
 
 package go-math32
 
-func isOddInt(x float64) bool {
+func isOddInt(x float32) bool {
 	xi, xf := Modf(x)
-	return xf == 0 && int64(xi)&1 == 1
+	return xf == 0 && int32(xi)&1 == 1
 }
 
 // Special cases taken from FreeBSD's /usr/src/lib/msun/src/e_pow.c
@@ -35,9 +35,9 @@ func isOddInt(x float64) bool {
 //	Pow(+Inf, y) = +0 for y < 0
 //	Pow(-Inf, y) = Pow(-0, -y)
 //	Pow(x, y) = NaN for finite x < 0 and finite non-integer y
-func Pow(x, y float64) float64
+func Pow(x, y float32) float32
 
-func pow(x, y float64) float64 {
+func pow(x, y float32) float32 {
 	switch {
 	case y == 0 || x == 1:
 		return 1
@@ -93,7 +93,7 @@ func pow(x, y float64) float64 {
 	if yf != 0 && x < 0 {
 		return NaN()
 	}
-	if yi >= 1<<63 {
+	if yi >= 1<<31 {
 		// yi is a large even int that will lead to overflow (or underflow to 0)
 		// for all x except -1 (x == 1 was handled earlier)
 		switch {
@@ -107,7 +107,7 @@ func pow(x, y float64) float64 {
 	}
 
 	// ans = a1 * 2**ae (= 1 for now).
-	a1 := 1.0
+	var a1 float32 = 1.0
 	ae := 0
 
 	// ans *= x**yf
@@ -116,7 +116,8 @@ func pow(x, y float64) float64 {
 			yf--
 			yi++
 		}
-		a1 = Exp(yf * Log(x))
+		_a1 := yf * Log(x)
+		a1 = Exp(_a1)
 	}
 
 	// ans *= x**yi
@@ -124,12 +125,12 @@ func pow(x, y float64) float64 {
 	// of x according to bits of yi.
 	// accumulate powers of two into exp.
 	x1, xe := Frexp(x)
-	for i := int64(yi); i != 0; i >>= 1 {
+	for i := int32(yi); i != 0; i >>= 1 {
 		if xe < -1<<12 || 1<<12 < xe {
 			// catch xe before it overflows the left shift below
 			// Since i !=0 it has at least one bit still set, so ae will accumulate xe
 			// on at least one more iteration, ae += xe is a lower bound on ae
-			// the lower bound on ae exceeds the size of a float64 exp
+			// the lower bound on ae exceeds the size of a float32 exp
 			// so the final call to Ldexp will produce under/overflow (0/Inf)
 			ae += xe
 			break

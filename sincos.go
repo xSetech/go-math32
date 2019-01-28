@@ -14,7 +14,7 @@ package go-math32
 //	Sincos(±0) = ±0, 1
 //	Sincos(±Inf) = NaN, NaN
 //	Sincos(NaN) = NaN, NaN
-func Sincos(x float64) (sin, cos float64) {
+func Sincos(x float32) (sin, cos float32) {
 	const (
 		PI4A = 7.85398125648498535156E-1                             // 0x3fe921fb40000000, Pi/4 split into three parts
 		PI4B = 3.77489470793079817668E-8                             // 0x3e64442d00000000,
@@ -36,8 +36,8 @@ func Sincos(x float64) (sin, cos float64) {
 		sinSign = true
 	}
 
-	j := int64(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
-	y := float64(j)      // integer part of x/(Pi/4), as float
+	j := int32(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
+	y := float32(j)      // integer part of x/(Pi/4), as float
 
 	if j&1 == 1 { // map zeros to origin
 		j++

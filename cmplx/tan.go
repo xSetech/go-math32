@@ -89,7 +89,7 @@ func Tanh(x complex128) complex128 {
 }
 
 // Program to subtract nearest integer multiple of PI
-func reducePi(x float64) float64 {
+func reducePi(x float32) float32 {
 	const (
 		// extended precision value of PI:
 		DP1 = 3.14159265160560607910E0   // ?? 0x400921fb54000000
@@ -102,12 +102,12 @@ func reducePi(x float64) float64 {
 	} else {
 		t -= 0.5
 	}
-	t = float64(int64(t)) // int64(t) = the multiple
+	t = float32(int32(t)) // int32(t) = the multiple
 	return ((x - t*DP1) - t*DP2) - t*DP3
 }
 
 // Taylor series expansion for cosh(2y) - cos(2x)
-func tanSeries(z complex128) float64 {
+func tanSeries(z complex128) float32 {
 	const MACHEP = 1.0 / (1 << 53)
 	x := math.Abs(2 * real(z))
 	y := math.Abs(2 * imag(z))

@@ -77,9 +77,9 @@ package go-math32
 //	Log(0) = -Inf
 //	Log(x < 0) = NaN
 //	Log(NaN) = NaN
-func Log(x float64) float64
+func Log(x float32) float32
 
-func log(x float64) float64 {
+func log(x float32) float32 {
 	const (
 		Ln2Hi = 6.93147180369123816490e-01 /* 3fe62e42 fee00000 */
 		Ln2Lo = 1.90821492927058770002e-10 /* 3dea39ef 35793c76 */
@@ -109,7 +109,7 @@ func log(x float64) float64 {
 		ki--
 	}
 	f := f1 - 1
-	k := float64(ki)
+	k := float32(ki)
 
 	// compute
 	s := f / (2 + f)

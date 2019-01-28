@@ -89,14 +89,14 @@ package go-math32
 //	Sqrt(±0) = ±0
 //	Sqrt(x < 0) = NaN
 //	Sqrt(NaN) = NaN
-func Sqrt(x float64) float64
+func Sqrt(x float32) float32
 
 // Note: Sqrt is implemented in assembly on some systems.
 // Others have assembly stubs that jump to func sqrt below.
 // On systems where Sqrt is a single instruction, the compiler
 // may turn a direct call into a direct use of that instruction instead.
 
-func sqrt(x float64) float64 {
+func sqrt(x float32) float32 {
 	// special cases
 	switch {
 	case x == 0 || IsNaN(x) || IsInf(x, 1):
@@ -104,7 +104,7 @@ func sqrt(x float64) float64 {
 	case x < 0:
 		return NaN()
 	}
-	ix := Float64bits(x)
+	ix := Float32bits(x)
 	// normalize x
 	exp := int((ix >> shift) & mask)
 	if exp == 0 { // subnormal x
@@ -115,7 +115,9 @@ func sqrt(x float64) float64 {
 		exp++
 	}
 	exp -= bias // unbias exponent
-	ix &^= mask << shift
+	var ix_ss uint32 = 0x7F800000
+	ix &^= ix_ss
+	// ix &^= mask << shift
 	ix |= 1 << shift
 	if exp&1 == 1 { // odd exp, double x to make it even
 		ix <<= 1
@@ -123,8 +125,8 @@ func sqrt(x float64) float64 {
 	exp >>= 1 // exp = exp/2, exponent of square root
 	// generate sqrt(x) bit by bit
 	ix <<= 1
-	var q, s uint64               // q = sqrt(x)
-	r := uint64(1 << (shift + 1)) // r = moving bit from MSB to LSB
+	var q, s uint32               // q = sqrt(x)
+	r := uint32(1 << (shift + 1)) // r = moving bit from MSB to LSB
 	for r != 0 {
 		t := s + r
 		if t <= ix {
@@ -139,6 +141,6 @@ func sqrt(x float64) float64 {
 	if ix != 0 { // remainder, result not exact
 		q += q & 1 // round according to extra bit
 	}
-	ix = q>>1 + uint64(exp-1+bias)<<shift // significand + biased exponent
-	return Float64frombits(ix)
+	ix = q>>1 + uint32(exp-1+bias)<<shift // significand + biased exponent
+	return Float32frombits(ix)
 }

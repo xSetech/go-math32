@@ -60,12 +60,12 @@ package go-math32
 //   moshier@na-net.ornl.gov
 
 // tan coefficients
-var _tanP = [...]float64{
+var _tanP = [...]float32{
 	-1.30936939181383777646E4, // 0xc0c992d8d24f3f38
 	1.15351664838587416140E6,  // 0x413199eca5fc9ddd
 	-1.79565251976484877988E7, // 0xc1711fead3299176
 }
-var _tanQ = [...]float64{
+var _tanQ = [...]float32{
 	1.00000000000000000000E0,
 	1.36812963470692954678E4,  //0x40cab8a5eeb36572
 	-1.32089234440210967447E6, //0xc13427bc582abc96
@@ -79,9 +79,9 @@ var _tanQ = [...]float64{
 //	Tan(±0) = ±0
 //	Tan(±Inf) = NaN
 //	Tan(NaN) = NaN
-func Tan(x float64) float64
+func Tan(x float32) float32
 
-func tan(x float64) float64 {
+func tan(x float32) float32 {
 	const (
 		PI4A = 7.85398125648498535156E-1                             // 0x3fe921fb40000000, Pi/4 split into three parts
 		PI4B = 3.77489470793079817668E-8                             // 0x3e64442d00000000,
@@ -103,8 +103,8 @@ func tan(x float64) float64 {
 		sign = true
 	}
 
-	j := int64(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
-	y := float64(j)      // integer part of x/(Pi/4), as float
+	j := int32(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
+	y := float32(j)      // integer part of x/(Pi/4), as float
 
 	/* map zeros and singularities to origin */
 	if j&1 == 1 {

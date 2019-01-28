@@ -90,7 +90,7 @@ package go-math32
 //   moshier@na-net.ornl.gov
 
 // sin coefficients
-var _sin = [...]float64{
+var _sin = [...]float32{
 	1.58962301576546568060E-10, // 0x3de5d8fd1fd19ccd
 	-2.50507477628578072866E-8, // 0xbe5ae5e5a9291f5d
 	2.75573136213857245213E-6,  // 0x3ec71de3567d48a1
@@ -100,7 +100,7 @@ var _sin = [...]float64{
 }
 
 // cos coefficients
-var _cos = [...]float64{
+var _cos = [...]float32{
 	-1.13585365213876817300E-11, // 0xbda8fa49a0861a9b
 	2.08757008419747316778E-9,   // 0x3e21ee9d7b4e3f05
 	-2.75573141792967388112E-7,  // 0xbe927e4f7eac4bc6
@@ -114,9 +114,9 @@ var _cos = [...]float64{
 // Special cases are:
 //	Cos(±Inf) = NaN
 //	Cos(NaN) = NaN
-func Cos(x float64) float64
+func Cos(x float32) float32
 
-func cos(x float64) float64 {
+func cos(x float32) float32 {
 	const (
 		PI4A = 7.85398125648498535156E-1                             // 0x3fe921fb40000000, Pi/4 split into three parts
 		PI4B = 3.77489470793079817668E-8                             // 0x3e64442d00000000,
@@ -133,8 +133,8 @@ func cos(x float64) float64 {
 	sign := false
 	x = Abs(x)
 
-	j := int64(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
-	y := float64(j)      // integer part of x/(Pi/4), as float
+	j := int32(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
+	y := float32(j)      // integer part of x/(Pi/4), as float
 
 	// map zeros to origin
 	if j&1 == 1 {
@@ -169,9 +169,9 @@ func cos(x float64) float64 {
 //	Sin(±0) = ±0
 //	Sin(±Inf) = NaN
 //	Sin(NaN) = NaN
-func Sin(x float64) float64
+func Sin(x float32) float32
 
-func sin(x float64) float64 {
+func sin(x float32) float32 {
 	const (
 		PI4A = 7.85398125648498535156E-1                             // 0x3fe921fb40000000, Pi/4 split into three parts
 		PI4B = 3.77489470793079817668E-8                             // 0x3e64442d00000000,
@@ -193,8 +193,8 @@ func sin(x float64) float64 {
 		sign = true
 	}
 
-	j := int64(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
-	y := float64(j)      // integer part of x/(Pi/4), as float
+	j := int32(x * M4PI) // integer part of x/(Pi/4), as integer for tests on the phase angle
+	y := float32(j)      // integer part of x/(Pi/4), as float
 
 	// map zeros to origin
 	if j&1 == 1 {
